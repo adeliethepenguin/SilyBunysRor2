@@ -21,6 +21,7 @@ namespace AdelieLovelyPluginBunyItems
     // You don't need this if you're not using R2API in your plugin,
     // it's just to tell BepInEx to initialize R2API before this plugin so it's safe to use R2API.
     [BepInDependency(ItemAPI.PluginGUID)]
+    [BepInDependency(RecalculateStatsAPI.PluginGUID)]
 
     // This one is because we use a .language file for language tokens
     // More info in https://risk-of-thunder.github.io/R2Wiki/Mod-Creation/Assets/Localization/
@@ -39,7 +40,7 @@ namespace AdelieLovelyPluginBunyItems
     public class AdelieLovelyPluginBunyItems : BaseUnityPlugin
     {
         
-        private string assetBundlePath = System.IO.Path.Combine(Paths.PluginPath, "BunyMod", "bunymodo"); 
+        
 
         private AssetBundle bunyAssets;
 
@@ -50,11 +51,11 @@ namespace AdelieLovelyPluginBunyItems
         // Change the PluginAuthor and the PluginName !
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "AdelieThePenguin";
-        public const string PluginName = "BunyItems";
-        public const string PluginVersion = "1.0.0";
-
+        public const string PluginName = "SilyBunys";
+        public const string PluginVersion = "1.0.4";
+        
         // We need our item definition to persist through our functions, and therefore make it a class field.
-        private static ItemDef myItemDef;
+        //private static ItemDef myItemDef;
 
         private static ItemDef babyBuny;
 
@@ -73,9 +74,9 @@ namespace AdelieLovelyPluginBunyItems
             babyBuny = ScriptableObject.CreateInstance<ItemDef>();
             coolBuny = ScriptableObject.CreateInstance<ItemDef>();
             superBuny = ScriptableObject.CreateInstance<ItemDef>();
-            myItemDef = ScriptableObject.CreateInstance<ItemDef>();
+            //myItemDef = ScriptableObject.CreateInstance<ItemDef>();
 
-            string path = System.IO.Path.Combine(Paths.PluginPath, "BunyMod", "bunymodo");
+            string path = System.IO.Path.Combine(Paths.PluginPath, "adeliethepenguin-SilyBunys", "SilyBunys", "bunymodo");
 
             bunyAssets = AssetBundle.LoadFromFile(path);
             if (!bunyAssets)
@@ -93,9 +94,9 @@ namespace AdelieLovelyPluginBunyItems
             superBuny.pickupModelPrefab = bunyAssets.LoadAsset<GameObject>("assets/assets for bunymod/epicbunypref.prefab");
 
 
-            Logger.LogInfo("BunyMod asset bundle loaded successfully.");
-            myItemDef.pickupIconSprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Common/MiscIcons/texMysteryIcon.png").WaitForCompletion();
-            myItemDef.pickupModelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mystery/PickupMystery.prefab").WaitForCompletion();
+            Logger.LogInfo("SilyBunys asset bundle loaded successfully.");
+            //myItemDef.pickupIconSprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Common/MiscIcons/texMysteryIcon.png").WaitForCompletion();
+           // myItemDef.pickupModelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mystery/PickupMystery.prefab").WaitForCompletion();
 
 
             PInfo = Info;
@@ -125,7 +126,7 @@ namespace AdelieLovelyPluginBunyItems
             // Tier1=white, Tier2=green, Tier3=red, Lunar=Lunar, Boss=yellow,
             // and finally NoTier is generally used for helper items, like the tonic affliction
 #pragma warning disable Publicizer001 // Accessing a member that was not originally public. Here we ignore this warning because with how this example is setup we are forced to do this
-            myItemDef._itemTierDef = Addressables.LoadAssetAsync<ItemTierDef>("RoR2/Base/Common/Tier2Def.asset").WaitForCompletion();
+            //myItemDef._itemTierDef = Addressables.LoadAssetAsync<ItemTierDef>("RoR2/Base/Common/Tier2Def.asset").WaitForCompletion();
 
             babyBuny._itemTierDef = Addressables.LoadAssetAsync<ItemTierDef>("RoR2/Base/Common/Tier1Def.asset").WaitForCompletion();
             coolBuny._itemTierDef = Addressables.LoadAssetAsync<ItemTierDef>("RoR2/Base/Common/Tier2Def.asset").WaitForCompletion();
@@ -141,7 +142,7 @@ namespace AdelieLovelyPluginBunyItems
             // if a shrine of order,
             // or a printer can take this item,
             // generally true, except for NoTier items.
-            myItemDef.canRemove = true;
+           // myItemDef.canRemove = true;
             babyBuny.canRemove = true;
             coolBuny.canRemove = true;
             superBuny.canRemove = true;
@@ -150,7 +151,7 @@ namespace AdelieLovelyPluginBunyItems
             // Hidden means that there will be no pickup notification,
             // and it won't appear in the inventory at the top of the screen.
             // This is useful for certain noTier helper items, such as the DrizzlePlayerHelper.
-            myItemDef.hidden = false;
+            //myItemDef.hidden = false;
             babyBuny.hidden = false;
             coolBuny.hidden = false;
             superBuny.hidden = false;
@@ -164,7 +165,7 @@ namespace AdelieLovelyPluginBunyItems
 
             // Then finally add it to R2API
             ItemAPI.Add(new CustomItem(babyBuny, displayRules));
-            ItemAPI.Add(new CustomItem(myItemDef, displayRules));
+            //ItemAPI.Add(new CustomItem(myItemDef, displayRules));
             ItemAPI.Add(new CustomItem(coolBuny, displayRules));
             ItemAPI.Add(new CustomItem(superBuny, displayRules));
 
@@ -274,7 +275,7 @@ namespace AdelieLovelyPluginBunyItems
 
 
                 // Store the amount of our item we have
-                var garbCount = attackerCharacterBody.inventory.GetItemCount(myItemDef.itemIndex);
+                /*var garbCount = attackerCharacterBody.inventory.GetItemCount(myItemDef.itemIndex);
                 if (garbCount > 0 &&
                     // Roll for our 50% chance.
                     Util.CheckRoll(50, attackerCharacterBody.master))
@@ -282,7 +283,7 @@ namespace AdelieLovelyPluginBunyItems
                     // Since we passed all checks, we now give our attacker the cloaked buff.
                     // Note how we are scaling the buff duration depending on the number of the custom item in our inventory.
                     attackerCharacterBody.AddTimedBuff(RoR2Content.Buffs.Cloak, 3 + garbCount);
-                }
+                }*/
 
                 
             }
