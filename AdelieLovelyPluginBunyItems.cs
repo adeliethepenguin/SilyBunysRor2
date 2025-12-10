@@ -10,6 +10,9 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Reflection;
 using RoR2.Stats;
+using RiskOfOptions;
+using BepInEx.Configuration;
+using RiskOfOptions.Options;
 
 
 // hi :D
@@ -30,7 +33,7 @@ namespace AdelieLovelyPluginBunyItems
     // This attribute is required, and lists metadata for your plugin.
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
 
-
+    [BepInDependency("com.rune580.riskofoptions")]
 
     // This is the main declaration of our plugin class.
     // BepInEx searches for all classes inheriting from BaseUnityPlugin to initialize on startup.
@@ -52,7 +55,7 @@ namespace AdelieLovelyPluginBunyItems
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "AdelieThePenguin";
         public const string PluginName = "SilyBunys";
-        public const string PluginVersion = "1.0.4";
+        public const string PluginVersion = "1.0.6";
         
         // We need our item definition to persist through our functions, and therefore make it a class field.
         //private static ItemDef myItemDef;
@@ -65,18 +68,31 @@ namespace AdelieLovelyPluginBunyItems
 
         private static ItemDef peeSyringe;
 
-
-        public static PluginInfo PInfo { get; private set; }
+        public static BepInEx.PluginInfo PInfo { get; private set; }
+        public ConfigEntry<bool> toggleBaby; 
+        public ConfigEntry<bool> toggleCool; 
+        public ConfigEntry<bool> toggleSuper; 
 
         // The Awake() method is run at the very start when the game is initialized.
         public void Awake()
         {
+            PInfo = Info;
+            Log.Init(Logger);
+
+            toggleBaby = Config.Bind("baby buny spawning", "Item spawning setting for baby buny item", true, "toggle on if you want baby bunys to spawn baby bunys on the map. toggle off if you want it sent directly to your inventory. (less lag)");
+            toggleCool = Config.Bind("Cool Buny spawning", "Item spawning setting for Cool Buny item", true, "toggle on if you want Cool Bunys to spawn baby bunys and Cool Bunys on the map. toggle off if you want it sent directly to your inventory. (less lag)");
+            toggleSuper = Config.Bind("SUPER EPIC BUNY spawning", "Item spawning setting for Cool Buny item", false, "toggle on if you want SUPER EPIC BUNY to spawn bnuys instead of send straight to your inventory. If you do so you are insane maybe? (disabled by default)");
+            ModSettingsManager.AddOption(new CheckBoxOption(toggleBaby));
+            ModSettingsManager.AddOption(new CheckBoxOption(toggleCool));
+            ModSettingsManager.AddOption(new CheckBoxOption(toggleSuper));
+
             babyBuny = ScriptableObject.CreateInstance<ItemDef>();
             coolBuny = ScriptableObject.CreateInstance<ItemDef>();
             superBuny = ScriptableObject.CreateInstance<ItemDef>();
             //myItemDef = ScriptableObject.CreateInstance<ItemDef>();
 
-            string path = System.IO.Path.Combine(Paths.PluginPath, "adeliethepenguin-SilyBunys", "SilyBunys", "bunymodo");
+            string path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(PInfo.Location), "bunymodo");
+            Logger.LogInfo("path is: " + path);
 
             bunyAssets = AssetBundle.LoadFromFile(path);
             if (!bunyAssets)
@@ -99,8 +115,7 @@ namespace AdelieLovelyPluginBunyItems
            // myItemDef.pickupModelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mystery/PickupMystery.prefab").WaitForCompletion();
 
 
-            PInfo = Info;
-            Log.Init(Logger);
+            
 
             // Language Tokens, explained there https://risk-of-thunder.github.io/R2Wiki/Mod-Creation/Assets/Localization/
             babyBuny.name = "ADELIETHEPENGUIN_BABYBUNY";
@@ -208,8 +223,14 @@ namespace AdelieLovelyPluginBunyItems
                 {
                     var transform = report.victimBody.transform;
 
-                    attackerCharacterBody.inventory.GiveItem(babyBuny, 1);
-                    //PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(babyBuny.itemIndex), transform.position, transform.forward * 20f);
+                    if (!toggleSuper.Value)
+                    {
+                        attackerCharacterBody.inventory.GiveItem(babyBuny, 1);
+                    }
+                    else
+                    {
+                        PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(babyBuny.itemIndex), transform.position, transform.forward * 20f);
+                    }
                 }
             }
 
@@ -237,7 +258,15 @@ namespace AdelieLovelyPluginBunyItems
                     Util.CheckRoll(1*babyCount, attackerCharacterBody.master))
                 {
                     var transform = report.victimBody.transform;
-                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(babyBuny.itemIndex), transform.position, transform.forward * 20f);
+
+                    if (toggleBaby.Value)
+                    {
+                        PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(babyBuny.itemIndex), transform.position, transform.forward * 20f);
+                    }
+                    else
+                    {
+                        attackerCharacterBody.inventory.GiveItem(babyBuny, 1);
+                    }
                 }
 
 
@@ -249,14 +278,28 @@ namespace AdelieLovelyPluginBunyItems
                     Util.CheckRoll(10 * coolCount, attackerCharacterBody.master))
                 {
                     var transform = report.victimBody.transform;
-                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(babyBuny.itemIndex), transform.position, transform.forward * 20f);
+                    if (toggleCool.Value)
+                    {
+                        PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(babyBuny.itemIndex), transform.position, transform.forward * 20f);
+                    }
+                    else
+                    {
+                        attackerCharacterBody.inventory.GiveItem(coolBuny, 1);
+                    }
                 }
                 if (coolCount > 0 &&
                     // Roll for our 1% chance.
                     Util.CheckRoll(1 * coolCount, attackerCharacterBody.master))
                 {
                     var transform = report.victimBody.transform;
-                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(coolBuny.itemIndex), transform.position, transform.forward * 20f);
+                    if(toggleCool.Value)
+                    {
+                        PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(coolBuny.itemIndex), transform.position, transform.forward * 20f);
+                    }
+                    else
+                    {
+                        attackerCharacterBody.inventory.GiveItem(coolBuny, 1);
+                    }
                 }
 
                 //SUPER BUNNY
@@ -266,8 +309,15 @@ namespace AdelieLovelyPluginBunyItems
                     var transform = report.victimBody.transform;
                     for (int i = 0; i < superCount; i++)
                     {
-                        attackerCharacterBody.inventory.GiveItem(babyBuny, 1);
-                        //PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(babyBuny.itemIndex), transform.position, transform.forward * (20f+superCount));
+                        if (!toggleSuper.Value)
+                        {
+                            attackerCharacterBody.inventory.GiveItem(babyBuny, 1);
+                        }
+                        else
+                        {
+                            PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(babyBuny.itemIndex), transform.position, transform.forward * (20f + superCount));
+                        }
+                        
                     }
                 }
 
@@ -290,22 +340,11 @@ namespace AdelieLovelyPluginBunyItems
         }
 
         // The Update() method is run on every frame of the game.
-        /*private void Update()
+        /*
+        private void Update()
         {
 
             
-            // This if statement checks if the player has currently pressed F2.
-            if (Input.GetKeyDown(KeyCode.F2))
-            {
-                // Get the player body to use a position:
-                var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
-
-                // And then drop our defined item in front of the player.
-
-                Log.Info($"Player pressed F2. Spawning our custom item at coordinates {transform.position}");
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(myItemDef.itemIndex), transform.position, transform.forward * 20f);
-            }
-
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 // Get the player body to use a position:
