@@ -1,0 +1,44 @@
+{
+  "strings": {
+	"BABYBUNY_NAME": "baby buny",
+	"BABYBUNY_PICKUP": "Low chance to baby buny on kill",
+	"BABYBUNY_DESC": "Whenever you <style=cIsDamage>kill an enemy</style>, you have a <style=cIsUtility>1%</style><style=cStack>(+1% per stack)</style> chance to spawn another baby buny item.",
+	"BABYBUNY_LORE": "A cute little baby buny. So cute and lovely. They will outlive you and your kin.",
+	"COOLBUNY_NAME": "Cool Buny",
+	"COOLBUNY_PICKUP": "Chance to baby buny on kill, low chance to Cool Buny on kill",
+	"COOLBUNY_DESC": "Whenever you <style=cIsDamage>kill an enemy</style>, you have a <style=cIsUtility>10%</style><style=cStack>(+10% per stack)</style> chance to spawn another Cool Buny and a <style=cIsUtility>1%</style><style=cStack>(+1% per stack)</style> chance to spawn a baby buny item.",
+	"COOLBUNY_LORE": "Cool Buny. Your mom loves when Cool Buny comes over to play video games with you.",
+	"SUPERBUNY_NAME": "SUPER EPIC BUNY!!!!",
+	"SUPERBUNY_PICKUP": "ALWAYS baby buny on kill. Small chance to baby buny on HIT! Also... all your bunys grant you 1 max hp now!!",
+	"SUPERBUNY_DESC": "Whenever you <style=cIsDamage>kill an enemy</style>, you get a baby buny item. Whenever you hit a an enemy, you have a <style=cIsUtility>1%</style><style=cStack>(+1% per stack)</style> chance to get a baby buny item. ",
+	"SUPERBUNY_LORE": "TEN BILLION MORE BABY BUNYS TO PETRICHOR V!!!"
+  },
+  "FR": {
+	"BABYBUNY_NAME": "laperau",
+	"BABYBUNY_PICKUP": "petite chance à lapin bébé quand tu tuer quelque chose",
+	"BABYBUNY_DESC": "Quand tu <style=cIsDamage>tuer un ennemi</style>, tu à une <style=cIsUtility>1%</style><style=cStack>(+1% per stack)</style> chance de créer une autre laperau.",
+	"BABYBUNY_LORE": "Un petite laperau mignon. si mignon et drôle. lalalallalalalalala ils t'embrace et te dit bonjour comment est tu mademoiselle je t'adore beacoup!!!!!!",
+	"COOLBUNY_NAME": "Lapin Cool",
+	"COOLBUNY_PICKUP": "chance à lapin bébé quand tu tuer quelque chose, petite chance à Lapin Cool quand tu tuer quelque chose",
+	"COOLBUNY_DESC": "Quand tu <style=cIsDamage>tuer un ennemi</style>, tu à une <style=cIsUtility>10%</style><style=cStack>(+10% per stack)</style> chance de créer un autre lapin Cool et une <style=cIsUtility>1%</style><style=cStack>(+1% per stack)</style> chance de créer un laperau.",
+	"COOLBUNY_LORE": "Lapin Cool. Ta mère l'adore.",
+	"SUPERBUNY_NAME": "LAPIN SUPER EPIC!!!!",
+	"SUPERBUNY_PICKUP": "TOUJOURS laperau en tuer quelque chose. Petite chance de laperau on HIT! Aussi, +1 maxHP pour chacun lapin tu as!!",
+	"SUPERBUNY_DESC": "Quand tu <style=cIsDamage>tuer un ennemi</style>, tu reçois un laperau. Quand tu attaque un ennemi, tu à une <style=cIsUtility>1%</style><style=cStack>(+1% per stack)</style> chance de obtenir un laperau. +1 max HP pour chacun lapin.",
+	"SUPERBUNY_LORE": "DIX MILLIARDS PLUS DE LAPERAU POUR PETRICHOR V!!!"
+  },
+  "en": {
+	"BABYBUNY_NAME": "baby buny",
+	"BABYBUNY_PICKUP": "Low chance to baby buny on kill",
+	"BABYBUNY_DESC": "Whenever you <style=cIsDamage>kill an enemy</style>, you have a <style=cIsUtility>1%</style><style=cStack>(+1% per stack)</style> chance to spawn another baby buny item.",
+	"BABYBUNY_LORE": "A cute little baby buny. So cute and lovely. They will outlive you and your kin.",
+	"COOLBUNY_NAME": "Cool Buny",
+	"COOLBUNY_PICKUP": "Chance to baby buny on kill, low chance to Cool Buny on kill",
+	"COOLBUNY_DESC": "Whenever you <style=cIsDamage>kill an enemy</style>, you have a <style=cIsUtility>10%</style><style=cStack>(+10% per stack)</style> chance to spawn another Cool Buny and a <style=cIsUtility>1%</style><style=cStack>(+1% per stack)</style> chance to spawn a baby buny item.",
+	"COOLBUNY_LORE": "Cool Buny. Your mom loves when Cool Buny comes over to play video games with you.",
+	"SUPERBUNY_NAME": "SUPER EPIC BUNY!!!!",
+	"SUPERBUNY_PICKUP": "ALWAYS baby buny on kill. Small chance to baby buny on HIT! Also... all your bunys grant you 1 max hp now!!",
+	"SUPERBUNY_DESC": "Whenever you <style=cIsDamage>kill an enemy</style>, you get a baby buny item. Whenever you hit a an enemy, you have a <style=cIsUtility>1%</style><style=cStack>(+1% per stack)</style> chance to get a baby buny item. ",
+	"SUPERBUNY_LORE": "TEN BILLION MORE BABY BUNYS TO PETRICHOR V!!!"
+  }
+}
