@@ -66,6 +66,8 @@ namespace AdelieLovelyPluginBunyItems
 
         private static ItemDef superBuny;
 
+        private static EquipmentDef bunEssence;
+
         private static ItemDef peeSyringe;
 
         public static BepInEx.PluginInfo PInfo { get; private set; }
@@ -89,10 +91,11 @@ namespace AdelieLovelyPluginBunyItems
             babyBuny = ScriptableObject.CreateInstance<ItemDef>();
             coolBuny = ScriptableObject.CreateInstance<ItemDef>();
             superBuny = ScriptableObject.CreateInstance<ItemDef>();
+            bunEssence = ScriptableObject.CreateInstance<EquipmentDef>();
             //myItemDef = ScriptableObject.CreateInstance<ItemDef>();
 
             string path = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(PInfo.Location), "bunymodo");
-            Logger.LogInfo("path is: " + path);
+            Logger.LogInfo("buny assetbundle path is: " + path);
 
             bunyAssets = AssetBundle.LoadFromFile(path);
             if (!bunyAssets)
@@ -184,10 +187,16 @@ namespace AdelieLovelyPluginBunyItems
             ItemAPI.Add(new CustomItem(coolBuny, displayRules));
             ItemAPI.Add(new CustomItem(superBuny, displayRules));
 
+
+            GenericPickupController.CreatePickupInfo babyInfo = new GenericPickupController.CreatePickupInfo();
+
+
             GlobalEventManager.onCharacterDeathGlobal += GlobalEventManager_onCharacterDeathGlobal;
             GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageDealt;
             RecalculateStatsAPI.GetStatCoefficients += ItemStatCalculator;
         }
+
+        
 
         private void ItemStatCalculator(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
