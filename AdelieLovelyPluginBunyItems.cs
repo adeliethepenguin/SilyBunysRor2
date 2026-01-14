@@ -55,7 +55,7 @@ namespace AdelieLovelyPluginBunyItems
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "AdelieThePenguin";
         public const string PluginName = "SilyBunys";
-        public const string PluginVersion = "1.0.6";
+        public const string PluginVersion = "1.0.7";
         
         // We need our item definition to persist through our functions, and therefore make it a class field.
         //private static ItemDef myItemDef;
@@ -293,7 +293,7 @@ namespace AdelieLovelyPluginBunyItems
                     }
                     else
                     {
-                        attackerCharacterBody.inventory.GiveItem(coolBuny, 1);
+                        attackerCharacterBody.inventory.GiveItem(babyBuny, 1);
                     }
                 }
                 if (coolCount > 0 &&

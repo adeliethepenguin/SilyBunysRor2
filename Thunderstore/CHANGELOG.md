@@ -27,3 +27,7 @@
 ## 1.0.6
 
 - Added config options to turn on and off spawning for each item!! Please use if you are facing lag!!!
+
+## 1.0.7
+
+- FIXED Error in my config thingy. If you were to turn off cool buny spawning it would make u get cool bunys in place of baby bunys. Fixed it now.
